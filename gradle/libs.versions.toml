@@ -1,16 +1,16 @@
 [versions]
-kotlin = "1.8.22"
+kotlin = "1.9.24"
 
-minecraft = "1.20.1"
-qfapi = "7.0.3+0.83.1-1.20.1"
-qkl = "2.1.0+kt.1.8.22+flk.1.9.4"
-loader = "0.19.2-beta.2"
-mappings = "1.20.1+build.5"
+minecraft = "1.20.4"
+qfapi = "9.0.0-alpha.8+0.97.0-1.20.4"
+qkl = "4.0.0+kt.1.9.23+flk.1.10.19"
+loader = "0.26.0-beta.1"
+mappings = "1.20.4+build.3"
 loom = "1.+"
 
-mod_menu = "7.1.0"
+mod_menu = "9.2.0-beta.2"
 
-spruce_ui = "5.0.0+1.20"
+spruce_ui = "5.0.3+1.20.4"
 
 [libraries]
 minecraft = { module = "com.mojang:minecraft", version.ref = "minecraft" }

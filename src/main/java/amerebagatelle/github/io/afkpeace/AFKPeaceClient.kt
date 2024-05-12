@@ -6,13 +6,15 @@ import amerebagatelle.github.io.afkpeace.config.AFKPeaceConfigManager
 import amerebagatelle.github.io.afkpeace.config.AFKPeaceConfigScreen
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
-import net.minecraft.client.MinecraftClient
+import net.minecraft.client.KeyMapping
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.client.gui.screen.Screen
-import net.minecraft.client.network.ClientPlayNetworkHandler
-import net.minecraft.client.network.ServerInfo
-import net.minecraft.client.option.KeyBind
-import net.minecraft.client.resource.language.I18n
+import net.minecraft.client.gui.screens.Screen
+import net.minecraft.client.multiplayer.ClientPacketListener
+import net.minecraft.client.multiplayer.ServerData
+import net.minecraft.client.resources.language.I18n
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload
+import net.minecraft.server.ServerInfo
 import org.apache.logging.log4j.LogManager
 import org.quiltmc.loader.api.ModContainer
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer
@@ -22,10 +24,10 @@ import org.quiltmc.qsl.networking.api.client.ClientPlayConnectionEvents
 
 class AFKPeaceClient : ClientModInitializer {
     override fun onInitializeClient(mod: ModContainer) {
-        settingsKeybind = KeyBindingHelper.registerKeyBinding(KeyBind("afkpeace.keybind.settingsMenu", -1, "AFKPeace"))
-        ClientTickEvents.END.register(ClientTickEvents.End { client: MinecraftClient ->
-            if (settingsKeybind.wasPressed()) {
-                client.setScreen(AFKPeaceConfigScreen(client.currentScreen))
+        settingsKeybind = KeyBindingHelper.registerKeyBinding(KeyMapping("afkpeace.keybind.settingsMenu", -1, "AFKPeace"))
+        ClientTickEvents.END.register(ClientTickEvents.End { client: Minecraft ->
+            if (settingsKeybind.isDown) {
+                client.setScreen(AFKPeaceConfigScreen(client.screen))
             }
             if (AFKPeaceConfigManager.AUTO_AFK.value()) {
                 tickAfkStatus()
@@ -33,10 +35,10 @@ class AFKPeaceClient : ClientModInitializer {
         })
         HudRenderCallback.EVENT.register(HudRenderCallback { guiGraphics: GuiGraphics?, tickDelta: Float ->
             if ((AFKPeaceConfigManager.DAMAGE_LOGOUT_ENABLED.value() || isAfk) && AFKPeaceConfigManager.FEATURES_ENABLED_INDICATOR.value()) {
-                val textRenderer = MinecraftClient.getInstance().textRenderer
-                guiGraphics?.drawText(
+                val textRenderer = Minecraft.getInstance().font
+                guiGraphics?.drawString(
                     textRenderer,
-                    I18n.translate("afkpeace.hud.featuresEnabled"),
+                    I18n.get("afkpeace.hud.featuresEnabled"),
                     10,
                     10,
                     0xFFFFFF,
@@ -44,8 +46,8 @@ class AFKPeaceClient : ClientModInitializer {
                 )
             }
         })
-        ClientPlayConnectionEvents.JOIN.register(ClientPlayConnectionEvents.Join { _: ClientPlayNetworkHandler?, _: PacketSender?, client: MinecraftClient ->
-            currentServerEntry = client.currentServerEntry
+        ClientPlayConnectionEvents.JOIN.register(ClientPlayConnectionEvents.Join { _: ClientPacketListener?, _: PacketSender<CustomPacketPayload>?, client: Minecraft ->
+            currentServerEntry = client.currentServer
         })
         LOGGER.info("AFKPeace " + mod.metadata().version().raw() + " Initialized")
     }
@@ -55,15 +57,12 @@ class AFKPeaceClient : ClientModInitializer {
 
         @Suppress("unused")
         val MODID = "afkpeace"
-        lateinit var settingsKeybind: KeyBind
+        lateinit var settingsKeybind: KeyMapping
 
         @JvmField
-        var currentServerEntry: ServerInfo? = null
+        var currentServerEntry: ServerData? = null
 
         @JvmField
         var loginScreen: Screen? = null
-
-        @JvmField
-        var disabled = false
     }
 }

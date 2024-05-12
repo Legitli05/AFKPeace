@@ -4,8 +4,9 @@
   "package": "amerebagatelle.github.io.afkpeace.mixin",
   "compatibilityLevel": "JAVA_8",
   "client": [
-    "client.ConnectMixin",
     "client.DisconnectedScreenMixin",
+    "client.DisconnectMixin",
+    "client.HealthMixin",
     "client.KeyboardMixin",
     "client.MouseMixin"
   ],

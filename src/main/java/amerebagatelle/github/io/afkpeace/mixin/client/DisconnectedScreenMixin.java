@@ -4,12 +4,17 @@ import amerebagatelle.github.io.afkpeace.AFKPeaceClient;
 import amerebagatelle.github.io.afkpeace.ConnectionManagerKt;
 import amerebagatelle.github.io.afkpeace.config.AFKPeaceConfigManager;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screen.DisconnectedScreen;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.StringWidget;
+import net.minecraft.client.gui.layouts.LinearLayout;
+import net.minecraft.client.gui.screens.DisconnectedScreen;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import org.quiltmc.loader.impl.plugin.gui.I18n;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -22,28 +27,22 @@ import java.time.format.DateTimeFormatter;
  */
 @Mixin(DisconnectedScreen.class)
 public abstract class DisconnectedScreenMixin extends Screen {
-    private String timeOfDisconnect;
+    @Shadow @Final private LinearLayout layout;
 
     protected DisconnectedScreenMixin() {
-        super(Text.empty());
+        super(Component.empty());
     }
 
-    @Inject(method = "init", at = @At("TAIL"))
+    @Inject(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/layouts/LinearLayout;arrangeElements()V", shift = At.Shift.BEFORE))
     public void onInit(CallbackInfo ci) {
-        timeOfDisconnect = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         if (!AFKPeaceConfigManager.RECONNECT_ENABLED.value() && AFKPeaceClient.currentServerEntry != null) {
-            var button = new ButtonWidget.Builder(Text.translatable("afkpeace.reconnect"), (buttonWidget) -> ConnectionManagerKt.connectToServer(AFKPeaceClient.currentServerEntry))
-                    .position(width / 2 - 100, this.height - 30)
+            var button = new Button.Builder(Component.translatable("afkpeace.reconnect"), (buttonWidget) -> ConnectionManagerKt.connectToServer(AFKPeaceClient.currentServerEntry))
+                    .pos(width / 2 - 100, this.height - 30)
                     .size(200, 20)
                     .build();
-            this.addDrawableChild(button);
+            this.addRenderableWidget(button);
         }
-    }
-
-    @Inject(method = "render", at = @At("TAIL"))
-    public void onRender(GuiGraphics graphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (AFKPeaceClient.disabled)
-            graphics.drawCenteredShadowedText(textRenderer, I18n.translate("afkpeace.disconnectscreen.disabled"), width / 2, height - 70, 16777215);
-        graphics.drawCenteredShadowedText(textRenderer, I18n.translate("afkpeace.disconnectscreen.time", timeOfDisconnect), width / 2, height - 50, 16777215);
+        String timeOfDisconnect = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.layout.addChild(new StringWidget(Component.translatable("afkpeace.disconnectscreen.time", timeOfDisconnect), this.font));
     }
 }

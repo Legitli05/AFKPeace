@@ -14,78 +14,78 @@ import dev.lambdaurora.spruceui.widget.SpruceButtonWidget
 import dev.lambdaurora.spruceui.widget.SpruceSeparatorWidget
 import dev.lambdaurora.spruceui.widget.container.SpruceOptionListWidget
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.client.gui.screen.Screen
-import net.minecraft.text.Text
+import net.minecraft.client.gui.screens.Screen
+import net.minecraft.network.chat.Component
 
-class AFKPeaceConfigScreen(private val parent: Screen?) : SpruceScreen(Text.translatable("afkpeace.config.title")) {
+class AFKPeaceConfigScreen(private val parent: Screen?) : SpruceScreen(Component.translatable("afkpeace.config.title")) {
     private val reconnectEnabled: SpruceOption = SpruceToggleBooleanOption(
         "afkpeace.option.reconnectEnabled", { AFKPeaceConfigManager.RECONNECT_ENABLED.value() },
         { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.RECONNECT_ENABLED, newValue) },
-        Text.translatable("afkpeace.option.reconnectEnabled.tooltip")
+        Component.translatable("afkpeace.option.reconnectEnabled.tooltip")
     )
     private val damageLogoutEnabled: SpruceOption = SpruceToggleBooleanOption(
         "afkpeace.option.damageLogoutEnabled", { AFKPeaceConfigManager.DAMAGE_LOGOUT_ENABLED.value() },
         { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.DAMAGE_LOGOUT_ENABLED, newValue) },
-        Text.translatable("afkpeace.option.damageLogoutEnabled.tooltip")
+        Component.translatable("afkpeace.option.damageLogoutEnabled.tooltip")
     )
     private val featuresEnabledIndicator: SpruceOption = SpruceToggleBooleanOption(
         "afkpeace.option.featuresEnabledIndicator", { AFKPeaceConfigManager.FEATURES_ENABLED_INDICATOR.value() },
         { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.FEATURES_ENABLED_INDICATOR, newValue) },
-        Text.translatable("afkpeace.option.featuresEnabledIndicator.tooltip")
+        Component.translatable("afkpeace.option.featuresEnabledIndicator.tooltip")
     )
 
     private val reconnectOnDamageLogout: SpruceOption = SpruceToggleBooleanOption(
         "afkpeace.option.reconnectOnDamageLogout", { AFKPeaceConfigManager.RECONNECT_ON_DAMAGE_LOGOUT.value() },
         { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.RECONNECT_ON_DAMAGE_LOGOUT, newValue) },
-        Text.translatable("afkpeace.option.reconnectOnDamageLogout.tooltip")
+        Component.translatable("afkpeace.option.reconnectOnDamageLogout.tooltip")
     )
     private val secondsBetweenReconnectAttempts: SpruceOption = SpruceIntegerInputOption(
         "afkpeace.option.secondsBetweenReconnectAttempts",
         { AFKPeaceConfigManager.SECONDS_BETWEEN_RECONNECT_ATTEMPTS.value() },
         { newValue: Int -> setConfigValue(AFKPeaceConfigManager.SECONDS_BETWEEN_RECONNECT_ATTEMPTS, newValue) },
-        Text.translatable("afkpeace.option.secondsBetweenReconnectAttempts.tooltip")
+        Component.translatable("afkpeace.option.secondsBetweenReconnectAttempts.tooltip")
     )
     private val reconnectAttemptNumber: SpruceOption = SpruceIntegerInputOption(
         "afkpeace.option.reconnectAttemptNumber", { AFKPeaceConfigManager.RECONNECT_ATTEMPT_NUMBER.value() },
         { newValue: Int -> setConfigValue(AFKPeaceConfigManager.RECONNECT_ATTEMPT_NUMBER, newValue) },
-        Text.translatable("afkpeace.option.reconnectAttemptNumber.tooltip")
+        Component.translatable("afkpeace.option.reconnectAttemptNumber.tooltip")
     )
     private val damageLogoutTolerance: SpruceOption = SpruceIntegerInputOption(
         "afkpeace.option.damageLogoutTolerance", { AFKPeaceConfigManager.DAMAGE_LOGOUT_TOLERANCE.value() },
         { newValue: Int -> setConfigValue(AFKPeaceConfigManager.DAMAGE_LOGOUT_TOLERANCE, newValue) },
-        Text.translatable("afkpeace.option.damageLogoutTolerance.tooltip")
+        Component.translatable("afkpeace.option.damageLogoutTolerance.tooltip")
     )
 
     private val autoAfk: SpruceOption = SpruceToggleBooleanOption(
         "afkpeace.option.autoAfk", { AFKPeaceConfigManager.AUTO_AFK.value() },
         { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.AUTO_AFK, newValue) },
-        Text.translatable("afkpeace.option.autoAfk.tooltip")
+        Component.translatable("afkpeace.option.autoAfk.tooltip")
     )
     private val afkModeReconnectEnabled: SpruceOption = SpruceToggleBooleanOption(
         "afkpeace.option.reconnectEnabled", { AFKPeaceConfigManager.AUTO_AFK_RECONNECT_ENABLED.value() },
         { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.AUTO_AFK_RECONNECT_ENABLED, newValue) },
-        Text.translatable("afkpeace.option.reconnectEnabled.tooltip")
+        Component.translatable("afkpeace.option.reconnectEnabled.tooltip")
     )
     private val afkModeDamageLogoutEnabled: SpruceOption = SpruceToggleBooleanOption(
         "afkpeace.option.damageLogoutEnabled", { AFKPeaceConfigManager.AUTO_AFK_DAMAGE_LOGOUT_ENABLED.value() },
         { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.AUTO_AFK_DAMAGE_LOGOUT_ENABLED, newValue) },
-        Text.translatable("afkpeace.option.damageLogoutEnabled.tooltip")
+        Component.translatable("afkpeace.option.damageLogoutEnabled.tooltip")
     )
     private val autoAfkTimerSeconds: SpruceOption = SpruceIntegerInputOption(
         "afkpeace.option.autoAfkTimer", { AFKPeaceConfigManager.AUTO_AFK_TIMER_SECONDS.value() },
         { newValue: Int -> setConfigValue(AFKPeaceConfigManager.AUTO_AFK_TIMER_SECONDS, newValue) },
-        Text.translatable("afkpeace.option.autoAfkTimer.tooltip")
+        Component.translatable("afkpeace.option.autoAfkTimer.tooltip")
     )
 
 
     override fun init() {
         super.init()
-        addDrawableChild(
+        addRenderableWidget(
             SpruceButtonWidget(
                 Position.of(2, 0),
                 100,
                 20,
-                Text.translatable("afkpeace.config.back")
+                Component.translatable("afkpeace.config.back")
             ) {
                 client!!.setScreen(
                     parent
@@ -93,8 +93,8 @@ class AFKPeaceConfigScreen(private val parent: Screen?) : SpruceScreen(Text.tran
             })
 
         val generalOptionTitle =
-            SpruceSeparatorWidget(Position.of(0, 20), width, Text.translatable("afkpeace.option.generalOptions"))
-        addDrawableChild(generalOptionTitle)
+            SpruceSeparatorWidget(Position.of(0, 20), width, Component.translatable("afkpeace.option.generalOptions"))
+        addRenderableWidget(generalOptionTitle)
 
         val options =
             SpruceOptionListWidget(Position.of(0, generalOptionTitle.y + generalOptionTitle.height), width, 300)
@@ -107,14 +107,14 @@ class AFKPeaceConfigScreen(private val parent: Screen?) : SpruceScreen(Text.tran
         options.addSingleOptionEntry(damageLogoutTolerance)
         options.background = BACKGROUND
         options.border = WIDGET_BORDER
-        addDrawableChild(options)
+        addRenderableWidget(options)
 
         val afkModeTitle = SpruceSeparatorWidget(
             Position.of(0, options.y + options.height),
             width,
-            Text.translatable("afkpeace.option.autoAfk")
+            Component.translatable("afkpeace.option.autoAfk")
         )
-        addDrawableChild(afkModeTitle)
+        addRenderableWidget(afkModeTitle)
 
         val afkMode = SpruceOptionListWidget(Position.of(0, afkModeTitle.y + afkModeTitle.height), width, height - 20)
         afkMode.addSingleOptionEntry(autoAfk)
@@ -123,11 +123,11 @@ class AFKPeaceConfigScreen(private val parent: Screen?) : SpruceScreen(Text.tran
         afkMode.addSingleOptionEntry(autoAfkTimerSeconds)
         afkMode.background = BACKGROUND
         afkMode.border = WIDGET_BORDER
-        addDrawableChild(afkMode)
+        addRenderableWidget(afkMode)
     }
 
     override fun renderTitle(graphics: GuiGraphics?, mouseX: Int, mouseY: Int, delta: Float) {
-        graphics?.drawCenteredShadowedText(textRenderer, title, width / 2, 8, 16777215)
+        graphics?.drawCenteredString(textRenderer, title, width / 2, 8, 16777215)
     }
 
     companion object {

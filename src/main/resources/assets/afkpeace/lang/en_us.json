@@ -6,6 +6,7 @@
   "afkpeace.reconnect": "Reconnect",
   "afkpeace.reconnecting": "Reconnecting",
   "afkpeace.reconnectfail": "Couldn't reconnect.",
+  "afkpeace.disconnectscreen.disabled": "AFKPeace Disabled",
   "afkpeace.disconnectscreen.time": "Time of disconnect: %s",
   "afkpeace.config.back": "Back",
   "afkpeace.config.title": "AFKPeace Config",

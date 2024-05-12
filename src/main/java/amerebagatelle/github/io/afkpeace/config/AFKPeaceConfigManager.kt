@@ -1,7 +1,7 @@
 package amerebagatelle.github.io.afkpeace.config
 
 import org.quiltmc.config.api.values.TrackedValue
-import org.quiltmc.loader.api.config.QuiltConfig
+import org.quiltmc.loader.api.config.v2.QuiltConfig
 
 object AFKPeaceConfigManager {
     private val CONFIG = QuiltConfig.create(

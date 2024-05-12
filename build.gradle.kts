@@ -1,4 +1,12 @@
+@file:Suppress("UnstableApiUsage")
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+// workaround for bug in quilt loom 1.3.3+
+project.configurations.configureEach {
+	exclude("net.fabricmc", "fabric-loader")
+	exclude("net.fabricmc.fabric-api")
+}
 
 plugins {
 	java
@@ -16,7 +24,7 @@ base.archivesName.set(archivesBaseName + minecraftVersion)
 val version: String by project
 group = "amerebagatelle.github.io"
 
-val javaVersion = 17
+val javaVersion = 21
 
 repositories {
 	maven(
@@ -34,8 +42,11 @@ dependencies {
 	//to change the versions see the gradle.properties file
 	minecraft(libs.minecraft)
 	mappings(
-		variantOf(libs.quilt.mappings) {
-			classifier("intermediary-v2")
+		loom.layered {
+			variantOf(libs.quilt.mappings) {
+				classifier("intermediary-v2")
+			}
+			officialMojangMappings()
 		}
 	)
 	modImplementation(libs.quilt.loader)

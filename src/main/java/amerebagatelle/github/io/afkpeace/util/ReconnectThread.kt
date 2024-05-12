@@ -4,20 +4,20 @@ import amerebagatelle.github.io.afkpeace.AFKPeaceClient
 import amerebagatelle.github.io.afkpeace.cancelReconnect
 import amerebagatelle.github.io.afkpeace.config.AFKPeaceConfigManager
 import amerebagatelle.github.io.afkpeace.finishReconnect
-import net.minecraft.client.MinecraftClient
-import net.minecraft.client.network.ServerAddress
-import net.minecraft.client.network.ServerInfo
+import net.minecraft.client.Minecraft
+import net.minecraft.client.multiplayer.ServerData
+import net.minecraft.client.multiplayer.resolver.ServerAddress
 import java.io.IOException
 import java.net.Socket
 
-class ReconnectThread(serverInfo: ServerInfo) : Thread() {
-    private val serverAddress: ServerAddress = ServerAddress.parse(serverInfo.address)
+class ReconnectThread(serverInfo: ServerData) : Thread() {
+    private val serverAddress: ServerAddress = ServerAddress.parseString(serverInfo.ip)
 
     /**
      * Tries to connect to the server using a socket as many times as is set, and returns if it could connect
      */
     override fun run() {
-        val client = MinecraftClient.getInstance()
+        val client = Minecraft.getInstance()
         val timesToAttempt = AFKPeaceConfigManager.RECONNECT_ATTEMPT_NUMBER.value()
         for (i in 0 until timesToAttempt) {
             try {
@@ -42,7 +42,7 @@ class ReconnectThread(serverInfo: ServerInfo) : Thread() {
 
     private fun pingServer() {
         val startTime = System.nanoTime()
-        val connectionSocket = Socket(serverAddress.address, serverAddress.port)
+        val connectionSocket = Socket(serverAddress.host, serverAddress.port)
         connectionSocket.close()
         val endTime = System.nanoTime()
         if (endTime - startTime > 2 * 1e+9) throw IOException("Ping was greater than five seconds, being " + (endTime - startTime) * 1e-9)
