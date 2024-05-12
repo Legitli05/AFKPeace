@@ -141,6 +141,7 @@ modrinth {
 	projectId.set("65jTHvHz")
 	versionName.set("$archivesBaseName $version")
 	versionNumber.set(version)
+	versionType.set("release")
 	changelog.set(System.getenv("CHANGELOG_BODY"))
 	uploadFile.set(tasks.remapJar.get())
 	gameVersions.addAll(minecraftVersion)
