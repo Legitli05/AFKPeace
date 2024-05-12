@@ -1,10 +1,7 @@
 package amerebagatelle.github.io.afkpeace.mixin.client;
 
 import amerebagatelle.github.io.afkpeace.AFKManager;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.KeyboardHandler;
-import net.minecraft.client.player.KeyboardInput;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

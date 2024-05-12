@@ -5,8 +5,6 @@
   "afkpeace.reconnecting": "Reconectando",
   "afkpeace.reconnectfail": "Não foi possível reconectar.",
   "afkpeace.disconnectscreen.time": "Tempo desconectado: %s",
-  "afkpeace.button.cancel": "Cancelar",
-  "afkpeace.button.confirm": "Confirmar",
   "afkpeace.config.title": "Definições do AFKPeace",
   "afkpeace.option.autoAfk": "AutoAFK: %s",
   "afkpeace.option.reconnectEnabled": "Reconexão: %s",
@@ -17,8 +15,5 @@
   "afkpeace.option.reconnectAttemptNumber": "Número de tentativas de reconexão",
   "afkpeace.option.damageLogoutTolerance": "Tolerância da saída por dano",
   "afkpeace.afkmode.on": "AFKMode ativado",
-  "afkpeace.afkmode.off": "AFKMode desativado",
-  "afkpeace.override.autoAfk": "AutoAFK desativado pelo servidor.",
-  "afkpeace.override.reconnectEnabled": "Reconexão automática desativada pelo servidor.",
-  "afkpeace.override.damageLogoutEnabled": "Saída por dano desativada pelo servidor."
+  "afkpeace.afkmode.off": "AFKMode desativado"
 }

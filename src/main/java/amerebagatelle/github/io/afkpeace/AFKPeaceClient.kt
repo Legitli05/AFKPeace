@@ -14,8 +14,8 @@ import net.minecraft.client.multiplayer.ClientPacketListener
 import net.minecraft.client.multiplayer.ServerData
 import net.minecraft.client.resources.language.I18n
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload
-import net.minecraft.server.ServerInfo
 import org.apache.logging.log4j.LogManager
+import org.apache.logging.log4j.Logger
 import org.quiltmc.loader.api.ModContainer
 import org.quiltmc.qsl.base.api.entrypoint.client.ClientModInitializer
 import org.quiltmc.qsl.lifecycle.api.client.event.ClientTickEvents
@@ -53,7 +53,7 @@ class AFKPeaceClient : ClientModInitializer {
     }
 
     companion object {
-        val LOGGER = LogManager.getLogger("AFKPeace")
+        val LOGGER: Logger = LogManager.getLogger("AFKPeace")!!
 
         @Suppress("unused")
         val MODID = "afkpeace"

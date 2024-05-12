@@ -1,8 +1,6 @@
 package amerebagatelle.github.io.afkpeace.config
 
-import org.quiltmc.config.api.Config
 import org.quiltmc.config.api.ReflectiveConfig
-import org.quiltmc.config.api.WrappedConfig
 import org.quiltmc.config.api.values.TrackedValue
 
 @Suppress("unused")
