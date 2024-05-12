@@ -24,7 +24,7 @@ fun startReconnect(target: ServerData) {
     client.setScreen(
         DisconnectedScreen(
             JoinMultiplayerScreen(TitleScreen()),
-            Component.literal("AFKPeaceReconnection"),
+            Component.literal("Disconnected"),
             Component.translatable("afkpeace.reconnect.reason")
         )
     )

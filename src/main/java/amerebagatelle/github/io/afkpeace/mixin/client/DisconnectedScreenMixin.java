@@ -1,5 +1,6 @@
 package amerebagatelle.github.io.afkpeace.mixin.client;
 
+import amerebagatelle.github.io.afkpeace.AFKManager;
 import amerebagatelle.github.io.afkpeace.AFKPeaceClient;
 import amerebagatelle.github.io.afkpeace.ConnectionManagerKt;
 import amerebagatelle.github.io.afkpeace.config.AFKPeaceConfigManager;
@@ -32,14 +33,14 @@ public abstract class DisconnectedScreenMixin extends Screen {
 
     @Inject(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/layouts/LinearLayout;arrangeElements()V", shift = At.Shift.BEFORE))
     public void onInit(CallbackInfo ci) {
-        if (!AFKPeaceConfigManager.RECONNECT_ENABLED.value() && AFKPeaceClient.currentServerEntry != null) {
+        String timeOfDisconnect = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.layout.addChild(new StringWidget(Component.translatable("afkpeace.disconnectscreen.time", timeOfDisconnect), this.font));
+        if (AFKPeaceClient.currentServerEntry != null) {
             var button = new Button.Builder(Component.translatable("afkpeace.reconnect"), (buttonWidget) -> ConnectionManagerKt.connectToServer(AFKPeaceClient.currentServerEntry))
                     .pos(width / 2 - 100, this.height - 30)
                     .size(200, 20)
                     .build();
-            this.addRenderableWidget(button);
+            this.layout.addChild(button);
         }
-        String timeOfDisconnect = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.layout.addChild(new StringWidget(Component.translatable("afkpeace.disconnectscreen.time", timeOfDisconnect), this.font));
     }
 }

@@ -1,9 +1,9 @@
 {
   "afkpeace.keybind.settingsMenu": "Open Settings",
   "afkpeace.hud.featuresEnabled": "AFKPeace Features Enabled",
-  "afkpeace.reconnect.reason": "Attempting to reconnect...",
+  "afkpeace.reconnect.reason": "AFKPeace: Attempting to reconnect...",
   "afkpeace.reason.damagelogout": "Damage logout activated",
-  "afkpeace.reconnect": "Reconnect",
+  "afkpeace.reconnect": "Reconnect Manually",
   "afkpeace.reconnecting": "Reconnecting",
   "afkpeace.reconnectfail": "Couldn't reconnect.",
   "afkpeace.disconnectscreen.disabled": "AFKPeace Disabled",
