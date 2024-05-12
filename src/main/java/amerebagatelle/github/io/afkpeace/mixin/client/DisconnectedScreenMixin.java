@@ -1,9 +1,7 @@
 package amerebagatelle.github.io.afkpeace.mixin.client;
 
-import amerebagatelle.github.io.afkpeace.AFKManager;
 import amerebagatelle.github.io.afkpeace.AFKPeaceClient;
 import amerebagatelle.github.io.afkpeace.ConnectionManagerKt;
-import amerebagatelle.github.io.afkpeace.config.AFKPeaceConfigManager;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.StringWidget;
 import net.minecraft.client.gui.layouts.LinearLayout;
