@@ -28,7 +28,7 @@ jobs:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
           CHANGELOG_BODY: ${{ github.event.release.body }}
       - name: Upload assets to release
-        uses: AButler/upload-release-assets@v2.0
+        uses: AButler/upload-release-assets@v3.0
         with:
           files: 'build/libs/*'
           repo-token: ${{ secrets.GITHUB_TOKEN }}
