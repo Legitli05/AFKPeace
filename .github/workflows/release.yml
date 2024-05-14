@@ -22,13 +22,13 @@ jobs:
           java-version: '21'
       - name: Build
         run: ./gradlew build
-      - name: Publish to Modrinth
-        run: ./gradlew modrinth
-        env:
-          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-          CHANGELOG_BODY: ${{ github.event.release.body }}
-      - name: Upload assets to release
-        uses: AButler/upload-release-assets@v3.0
+      - name: Publish Release Artifacts
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
-          files: 'build/libs/*'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          modrinth-id: 65jTHvHz
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          curseforge-id: 380938
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          github-token: ${{ secrets.GITHUB_TOKEN }}
