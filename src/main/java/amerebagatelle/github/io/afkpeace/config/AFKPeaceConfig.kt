@@ -1,31 +1,34 @@
 package amerebagatelle.github.io.afkpeace.config
 
-import org.quiltmc.config.api.ReflectiveConfig
-import org.quiltmc.config.api.values.TrackedValue
+import kotlinx.serialization.Serializable
 
 @Suppress("unused")
-class AFKPeaceConfig : ReflectiveConfig() {
+@Serializable
+class AFKPeaceConfig {
     val toggles = Toggles()
     val configurations = Configurations()
     val afkMode = AFKMode()
 
-    inner class Toggles : Section() {
-        val reconnectEnabled: TrackedValue<Boolean> = this.value(false)
-        val damageLogoutEnabled: TrackedValue<Boolean> = this.value(false)
-        val featuresEnabledIndicator: TrackedValue<Boolean> = this.value(true)
-    }
+    @Serializable
+    data class Toggles(
+        var reconnectEnabled: Boolean = false,
+        var damageLogoutEnabled: Boolean = false,
+        var featuresEnabledIndicator: Boolean = true
+    )
 
-    inner class Configurations : Section() {
-        val autoAfkTimerSeconds: TrackedValue<Int> = this.value(300)
-        val reconnectOnDamageLogout: TrackedValue<Boolean> = this.value(false)
-        val secondsBetweenReconnectAttempts: TrackedValue<Int> = this.value(3)
-        val reconnectAttemptNumber: TrackedValue<Int> = this.value(10)
-        val damageLogoutTolerance: TrackedValue<Int> = this.value(20)
-    }
+    @Serializable
+    data class Configurations (
+        var reconnectOnDamageLogout: Boolean = false,
+        var secondsBetweenReconnectAttempts: Int = 3,
+        var reconnectAttemptNumber: Int = 10,
+        var damageLogoutTolerance: Int = 20
+    )
 
-    inner class AFKMode : Section() {
-        val autoAfk: TrackedValue<Boolean> = this.value(false)
-        val autoAfkReconnectEnabled: TrackedValue<Boolean> = this.value(false)
-        val autoAfkDamageLogoutEnabled: TrackedValue<Boolean> = this.value(false)
-    }
+    @Serializable
+    data class AFKMode (
+        var autoAfk: Boolean = false,
+        var autoAfkReconnectEnabled: Boolean = false,
+        var autoAfkDamageLogoutEnabled: Boolean = false,
+        var autoAfkTimerSeconds: Int = 300
+    )
 }

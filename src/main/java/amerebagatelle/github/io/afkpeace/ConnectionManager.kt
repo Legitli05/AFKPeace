@@ -53,11 +53,12 @@ fun connectToServer(target: ServerData) =
         Minecraft.getInstance(),
         ServerAddress.parseString(target.ip),
         target,
-        false
+        false,
+        null
     )
 
 fun disconnectFromServer(reason: Component) {
-    if (AFKPeaceConfigManager.RECONNECT_ON_DAMAGE_LOGOUT.value()) {
+    if (AFKPeaceConfigManager.config.configurations.reconnectOnDamageLogout) {
         if (AFKPeaceClient.currentServerEntry != null) startReconnect(AFKPeaceClient.currentServerEntry!!)
         return
     }

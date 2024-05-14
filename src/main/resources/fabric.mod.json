@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "afkpeace",
+  "version": "${version}",
+
+  "name": "AFKPeace",
+  "description": "A mod to make going AFK on servers much easier, with rejoining and respawning features.",
+  "authors": [
+    "AMereBagatelle"
+  ],
+  "contact": {
+    "homepage": "https://github.com/AMereBagatelle/AFKPeace",
+    "issues": "https://github.com/AMereBagatelle/AFKPeace/issues",
+    "sources": "https://github.com/AMereBagatelle/AFKPeace"
+  },
+  "license": "MIT",
+
+  "icon": "assets/afkpeace/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      {
+        "adapter": "kotlin",
+        "value": "amerebagatelle.github.io.afkpeace.AFKPeaceClient"
+      }
+    ],
+    "modmenu": [
+      {
+        "adapter": "kotlin",
+        "value": "amerebagatelle.github.io.afkpeace.config.AFKPeaceModMenu"
+      }
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.15.0",
+    "fabric-api": ">=0.98.0",
+    "fabric-language-kotlin": ">=1.10.20+kotlin.1.9.24",
+    "minecraft": ">=1.20.5"
+  },
+  "mixins": ["afkpeace.mixins.json"]
+}

@@ -1,6 +1,5 @@
 package amerebagatelle.github.io.afkpeace.config
 
-import amerebagatelle.github.io.afkpeace.config.AFKPeaceConfigManager.setConfigValue
 import dev.lambdaurora.spruceui.Position
 import dev.lambdaurora.spruceui.background.Background
 import dev.lambdaurora.spruceui.background.SimpleColorBackground
@@ -19,61 +18,61 @@ import net.minecraft.network.chat.Component
 
 class AFKPeaceConfigScreen(private val parent: Screen?) : SpruceScreen(Component.translatable("afkpeace.config.title")) {
     private val reconnectEnabled: SpruceOption = SpruceToggleBooleanOption(
-        "afkpeace.option.reconnectEnabled", { AFKPeaceConfigManager.RECONNECT_ENABLED.value() },
-        { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.RECONNECT_ENABLED, newValue) },
+        "afkpeace.option.reconnectEnabled", { AFKPeaceConfigManager.config.toggles.reconnectEnabled },
+        { newValue: Boolean -> AFKPeaceConfigManager.config.toggles.reconnectEnabled = newValue; AFKPeaceConfigManager.saveSettings() },
         Component.translatable("afkpeace.option.reconnectEnabled.tooltip")
     )
     private val damageLogoutEnabled: SpruceOption = SpruceToggleBooleanOption(
-        "afkpeace.option.damageLogoutEnabled", { AFKPeaceConfigManager.DAMAGE_LOGOUT_ENABLED.value() },
-        { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.DAMAGE_LOGOUT_ENABLED, newValue) },
+        "afkpeace.option.damageLogoutEnabled", { AFKPeaceConfigManager.config.toggles.damageLogoutEnabled },
+        { newValue: Boolean -> AFKPeaceConfigManager.config.toggles.damageLogoutEnabled = newValue; AFKPeaceConfigManager.saveSettings() },
         Component.translatable("afkpeace.option.damageLogoutEnabled.tooltip")
     )
     private val featuresEnabledIndicator: SpruceOption = SpruceToggleBooleanOption(
-        "afkpeace.option.featuresEnabledIndicator", { AFKPeaceConfigManager.FEATURES_ENABLED_INDICATOR.value() },
-        { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.FEATURES_ENABLED_INDICATOR, newValue) },
+        "afkpeace.option.featuresEnabledIndicator", { AFKPeaceConfigManager.config.toggles.featuresEnabledIndicator },
+        { newValue: Boolean -> AFKPeaceConfigManager.config.toggles.featuresEnabledIndicator = newValue; AFKPeaceConfigManager.saveSettings() },
         Component.translatable("afkpeace.option.featuresEnabledIndicator.tooltip")
     )
 
     private val reconnectOnDamageLogout: SpruceOption = SpruceToggleBooleanOption(
-        "afkpeace.option.reconnectOnDamageLogout", { AFKPeaceConfigManager.RECONNECT_ON_DAMAGE_LOGOUT.value() },
-        { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.RECONNECT_ON_DAMAGE_LOGOUT, newValue) },
+        "afkpeace.option.reconnectOnDamageLogout", { AFKPeaceConfigManager.config.configurations.reconnectOnDamageLogout },
+        { newValue: Boolean -> AFKPeaceConfigManager.config.configurations.reconnectOnDamageLogout = newValue; AFKPeaceConfigManager.saveSettings() },
         Component.translatable("afkpeace.option.reconnectOnDamageLogout.tooltip")
     )
     private val secondsBetweenReconnectAttempts: SpruceOption = SpruceIntegerInputOption(
         "afkpeace.option.secondsBetweenReconnectAttempts",
-        { AFKPeaceConfigManager.SECONDS_BETWEEN_RECONNECT_ATTEMPTS.value() },
-        { newValue: Int -> setConfigValue(AFKPeaceConfigManager.SECONDS_BETWEEN_RECONNECT_ATTEMPTS, newValue) },
+        { AFKPeaceConfigManager.config.configurations.secondsBetweenReconnectAttempts },
+        { newValue: Int -> AFKPeaceConfigManager.config.configurations.secondsBetweenReconnectAttempts = newValue; AFKPeaceConfigManager.saveSettings() },
         Component.translatable("afkpeace.option.secondsBetweenReconnectAttempts.tooltip")
     )
     private val reconnectAttemptNumber: SpruceOption = SpruceIntegerInputOption(
-        "afkpeace.option.reconnectAttemptNumber", { AFKPeaceConfigManager.RECONNECT_ATTEMPT_NUMBER.value() },
-        { newValue: Int -> setConfigValue(AFKPeaceConfigManager.RECONNECT_ATTEMPT_NUMBER, newValue) },
+        "afkpeace.option.reconnectAttemptNumber", { AFKPeaceConfigManager.config.configurations.reconnectAttemptNumber },
+        { newValue: Int -> AFKPeaceConfigManager.config.configurations.reconnectAttemptNumber = newValue; AFKPeaceConfigManager.saveSettings() },
         Component.translatable("afkpeace.option.reconnectAttemptNumber.tooltip")
     )
     private val damageLogoutTolerance: SpruceOption = SpruceIntegerInputOption(
-        "afkpeace.option.damageLogoutTolerance", { AFKPeaceConfigManager.DAMAGE_LOGOUT_TOLERANCE.value() },
-        { newValue: Int -> setConfigValue(AFKPeaceConfigManager.DAMAGE_LOGOUT_TOLERANCE, newValue) },
+        "afkpeace.option.damageLogoutTolerance", { AFKPeaceConfigManager.config.configurations.damageLogoutTolerance },
+        { newValue: Int -> AFKPeaceConfigManager.config.configurations.damageLogoutTolerance = newValue; AFKPeaceConfigManager.saveSettings() },
         Component.translatable("afkpeace.option.damageLogoutTolerance.tooltip")
     )
 
     private val autoAfk: SpruceOption = SpruceToggleBooleanOption(
-        "afkpeace.option.autoAfk", { AFKPeaceConfigManager.AUTO_AFK.value() },
-        { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.AUTO_AFK, newValue) },
+        "afkpeace.option.autoAfk", { AFKPeaceConfigManager.config.afkMode.autoAfk },
+        { newValue: Boolean -> AFKPeaceConfigManager.config.afkMode.autoAfk = newValue; AFKPeaceConfigManager.saveSettings() },
         Component.translatable("afkpeace.option.autoAfk.tooltip")
     )
     private val afkModeReconnectEnabled: SpruceOption = SpruceToggleBooleanOption(
-        "afkpeace.option.reconnectEnabled", { AFKPeaceConfigManager.AUTO_AFK_RECONNECT_ENABLED.value() },
-        { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.AUTO_AFK_RECONNECT_ENABLED, newValue) },
+        "afkpeace.option.reconnectEnabled", { AFKPeaceConfigManager.config.afkMode.autoAfkReconnectEnabled },
+        { newValue: Boolean -> AFKPeaceConfigManager.config.afkMode.autoAfkReconnectEnabled = newValue; AFKPeaceConfigManager.saveSettings() },
         Component.translatable("afkpeace.option.reconnectEnabled.tooltip")
     )
     private val afkModeDamageLogoutEnabled: SpruceOption = SpruceToggleBooleanOption(
-        "afkpeace.option.damageLogoutEnabled", { AFKPeaceConfigManager.AUTO_AFK_DAMAGE_LOGOUT_ENABLED.value() },
-        { newValue: Boolean -> setConfigValue(AFKPeaceConfigManager.AUTO_AFK_DAMAGE_LOGOUT_ENABLED, newValue) },
+        "afkpeace.option.damageLogoutEnabled", { AFKPeaceConfigManager.config.afkMode.autoAfkDamageLogoutEnabled },
+        { newValue: Boolean -> AFKPeaceConfigManager.config.afkMode.autoAfkDamageLogoutEnabled = newValue; AFKPeaceConfigManager.saveSettings() },
         Component.translatable("afkpeace.option.damageLogoutEnabled.tooltip")
     )
     private val autoAfkTimerSeconds: SpruceOption = SpruceIntegerInputOption(
-        "afkpeace.option.autoAfkTimer", { AFKPeaceConfigManager.AUTO_AFK_TIMER_SECONDS.value() },
-        { newValue: Int -> setConfigValue(AFKPeaceConfigManager.AUTO_AFK_TIMER_SECONDS, newValue) },
+        "afkpeace.option.autoAfkTimer", { AFKPeaceConfigManager.config.afkMode.autoAfkTimerSeconds },
+        { newValue: Int -> AFKPeaceConfigManager.config.afkMode.autoAfkTimerSeconds = newValue; AFKPeaceConfigManager.saveSettings() },
         Component.translatable("afkpeace.option.autoAfkTimer.tooltip")
     )
 
@@ -87,7 +86,7 @@ class AFKPeaceConfigScreen(private val parent: Screen?) : SpruceScreen(Component
                 20,
                 Component.translatable("afkpeace.config.back")
             ) {
-                client!!.setScreen(
+                minecraft!!.setScreen(
                     parent
                 )
             })
@@ -127,7 +126,7 @@ class AFKPeaceConfigScreen(private val parent: Screen?) : SpruceScreen(Component
     }
 
     override fun renderTitle(graphics: GuiGraphics?, mouseX: Int, mouseY: Int, delta: Float) {
-        graphics?.drawCenteredString(textRenderer, title, width / 2, 8, 16777215)
+        graphics?.drawCenteredString(font, title, width / 2, 8, 16777215)
     }
 
     companion object {

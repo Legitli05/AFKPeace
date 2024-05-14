@@ -27,7 +27,7 @@ public class DisconnectMixin {
             Minecraft.getInstance().setScreen(new RealmsMainScreen(new TitleScreen()));
             return;
         }
-        if (!(AFKPeaceConfigManager.RECONNECT_ENABLED.value() || AFKManager.reconnectOverride())) return;
+        if (!(AFKPeaceConfigManager.INSTANCE.getConfig().getToggles().getReconnectEnabled() || AFKManager.reconnectOverride())) return;
         if (reason.toString().contains("multiplayer.disconnect.kicked")) return;
 
         ServerData target = AFKPeaceClient.currentServerEntry;

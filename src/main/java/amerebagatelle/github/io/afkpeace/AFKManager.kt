@@ -19,7 +19,7 @@ object AFKManager {
     fun tickAfkStatus() {
         if (System.nanoTime() - lastUpdate > 1e+9) {
             afkTime++
-            val afk = afkTime > AFKPeaceConfigManager.AUTO_AFK_TIMER_SECONDS.value()
+            val afk = afkTime > AFKPeaceConfigManager.config.afkMode.autoAfkTimerSeconds
             if (afk && !wasAfk) {
                 AFKPeaceClient.LOGGER.info("AutoAFK on.")
                 if (Minecraft.getInstance().player != null) {
@@ -45,18 +45,18 @@ object AFKManager {
                 }
                 isAfk = false
             }
-            wasAfk = afk && AFKPeaceConfigManager.AUTO_AFK.value()
+            wasAfk = afk && AFKPeaceConfigManager.config.afkMode.autoAfk
             lastUpdate = System.nanoTime()
         }
     }
 
     @JvmStatic
     fun damageLogoutOverride(): Boolean {
-        return isAfk && AFKPeaceConfigManager.AUTO_AFK_DAMAGE_LOGOUT_ENABLED.value()
+        return isAfk && AFKPeaceConfigManager.config.afkMode.autoAfkDamageLogoutEnabled
     }
 
     @JvmStatic
     fun reconnectOverride(): Boolean {
-        return isAfk && AFKPeaceConfigManager.AUTO_AFK_RECONNECT_ENABLED.value()
+        return isAfk && AFKPeaceConfigManager.config.afkMode.autoAfkReconnectEnabled
     }
 }

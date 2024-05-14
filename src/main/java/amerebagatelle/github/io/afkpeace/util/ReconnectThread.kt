@@ -18,10 +18,10 @@ class ReconnectThread(serverInfo: ServerData) : Thread() {
      */
     override fun run() {
         val client = Minecraft.getInstance()
-        val timesToAttempt = AFKPeaceConfigManager.RECONNECT_ATTEMPT_NUMBER.value()
+        val timesToAttempt = AFKPeaceConfigManager.config.configurations.reconnectAttemptNumber
         for (i in 0 until timesToAttempt) {
             try {
-                val secondsBetweenAttempts = AFKPeaceConfigManager.SECONDS_BETWEEN_RECONNECT_ATTEMPTS.value()
+                val secondsBetweenAttempts = AFKPeaceConfigManager.config.configurations.secondsBetweenReconnectAttempts
                 sleep(secondsBetweenAttempts * 1000L)
                 for (i1 in 0..9) {
                     pingServer()

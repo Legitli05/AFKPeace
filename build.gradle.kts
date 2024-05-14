@@ -2,18 +2,14 @@
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-// workaround for bug in quilt loom 1.3.3+
-project.configurations.configureEach {
-	exclude("net.fabricmc", "fabric-loader")
-	exclude("net.fabricmc.fabric-api")
-}
-
 plugins {
 	java
 	`maven-publish`
 
-	alias(libs.plugins.kotlin)
-	alias(libs.plugins.quilt.loom)
+	kotlin("jvm") version "1.9.24"
+	kotlin("plugin.serialization") version "1.9.24"
+
+	alias(libs.plugins.fabric.loom)
 
 	id("com.modrinth.minotaur") version "2.+"
 }
@@ -28,9 +24,6 @@ val javaVersion = 21
 
 repositories {
 	maven(
-		url = "https://maven.quiltmc.org/repository/release"
-	)
-	maven(
 		url = "https://maven.terraformersmc.com/"
 	)
 	maven (
@@ -43,21 +36,23 @@ dependencies {
 	minecraft(libs.minecraft)
 	mappings(
 		loom.layered {
-			variantOf(libs.quilt.mappings) {
+			variantOf(libs.yarn) {
 				classifier("intermediary-v2")
 			}
 			officialMojangMappings()
 		}
 	)
-	modImplementation(libs.quilt.loader)
+	modImplementation(libs.fabric.loader)
 
-	modImplementation(libs.qfapi)
-	modImplementation(libs.qkl)
+	modImplementation(libs.fabric.api)
+	modImplementation(libs.flk)
 
 	modImplementation(libs.modmenu)
 
 	modImplementation(libs.spruceui)
 	include(libs.spruceui)
+
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
 	compileOnly("com.google.code.findbugs:jsr305:3.0.2")
 }
@@ -123,7 +118,6 @@ java {
 	targetCompatibility = JavaVersion.toVersion(javaVersion)
 }
 
-
 val sourceJar = task("sourceJar", Jar::class) {
 	dependsOn(tasks["classes"])
 	archiveClassifier.set("source")
@@ -134,6 +128,11 @@ val javadoc = task("javadocJar", Jar::class) {
 	archiveClassifier.set("javadoc")
 	from(tasks.javadoc)
 	from(tasks.javadoc)
+}
+
+loom {
+	decompilers {
+	}
 }
 
 modrinth {

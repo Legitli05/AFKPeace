@@ -22,9 +22,9 @@ public abstract class HealthMixin {
      */
     @Inject(method = "handleSetHealth", at = @At("TAIL"))
     public void onPlayerHealthUpdate(ClientboundSetHealthPacket packet, CallbackInfo cbi) {
-        if (AFKPeaceConfigManager.DAMAGE_LOGOUT_ENABLED.value() || AFKManager.damageLogoutOverride()) {
+        if (AFKPeaceConfigManager.INSTANCE.getConfig().getToggles().getDamageLogoutEnabled() || AFKManager.damageLogoutOverride()) {
             try {
-                if (packet.getHealth() < lastHealth && packet.getHealth() < AFKPeaceConfigManager.DAMAGE_LOGOUT_TOLERANCE.value()) {
+                if (packet.getHealth() < lastHealth && packet.getHealth() < AFKPeaceConfigManager.INSTANCE.getConfig().getConfigurations().getDamageLogoutTolerance()) {
                     ConnectionManagerKt.disconnectFromServer(Component.translatable("afkpeace.reason.damagelogout"));
                 }
             } catch (NullPointerException ignored) {
