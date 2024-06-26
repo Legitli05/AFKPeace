@@ -11,6 +11,7 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback
 import net.fabricmc.fabric.api.networking.v1.PacketSender
 import net.fabricmc.loader.api.FabricLoader
+import net.minecraft.client.DeltaTracker
 import net.minecraft.client.KeyMapping
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
@@ -32,7 +33,7 @@ class AFKPeaceClient : ClientModInitializer {
                 tickAfkStatus()
             }
         })
-        HudRenderCallback.EVENT.register(HudRenderCallback { guiGraphics: GuiGraphics?, _: Float ->
+        HudRenderCallback.EVENT.register(HudRenderCallback { guiGraphics: GuiGraphics?, _: DeltaTracker ->
             if ((AFKPeaceConfigManager.config.toggles.damageLogoutEnabled || isAfk) && AFKPeaceConfigManager.config.toggles.featuresEnabledIndicator) {
                 val textRenderer = Minecraft.getInstance().font
                 guiGraphics?.drawString(

@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.multiplayer.ClientCommonPacketListenerImpl;
 import net.minecraft.client.multiplayer.ServerData;
+import net.minecraft.network.DisconnectionDetails;
 import net.minecraft.network.chat.Component;
 import net.minecraft.realms.RealmsScreen;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,13 +23,13 @@ public class DisconnectMixin {
      * Checks if we should try to automatically reconnect, and if not opens a custom screen with a reconnect button
      */
     @Inject(method = "onDisconnect", at = @At("HEAD"), cancellable = true)
-    public void tryReconnect(Component reason, CallbackInfo ci) {
+    public void tryReconnect(DisconnectionDetails disconnectionDetails, CallbackInfo ci) {
         if(AFKPeaceClient.loginScreen instanceof RealmsScreen) {
             Minecraft.getInstance().setScreen(new RealmsMainScreen(new TitleScreen()));
             return;
         }
         if (!(AFKPeaceConfigManager.INSTANCE.getConfig().getToggles().getReconnectEnabled() || AFKManager.reconnectOverride())) return;
-        if (reason.toString().contains("multiplayer.disconnect.kicked")) return;
+        if (disconnectionDetails.reason().toString().contains("multiplayer.disconnect.kicked")) return;
 
         ServerData target = AFKPeaceClient.currentServerEntry;
         if (!ConnectionManagerKt.isDisconnecting) {
